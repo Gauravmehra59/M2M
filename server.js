@@ -2,7 +2,6 @@ const express = require("express")
 const app = express()
 const http = require("http")
 const port = process.env.PORT || 3000
-let reply_id_data = document.querySelector('.reply_id')
 
 const server = http.createServer(app)
 app.use(express.static(__dirname))

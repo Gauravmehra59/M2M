@@ -58,7 +58,9 @@ function sendmessage(message){ // outgoing mssg sender
             user : username,
             message : `<img src='${message}' width = 300px/>`,
             date : time,
-            reply_data:reply.textContent
+            reply_data:reply.textContent,
+            reply_id: Math.floor(Math.random() * 10000),
+            reply_id_val:reply_id_data.textContent
         }
     
         appendMessage(msg,'outgoing')
