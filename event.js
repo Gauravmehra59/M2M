@@ -59,6 +59,11 @@ $(function(){
         $(`#${get_id}`).parent().addClass("reply_color")
         setTimeout(function(){$(`#${get_id}`).parent().removeClass('reply_color'); }, 2000);
     })
+    $(".input-group-addon").click(function(){
+        $(".outgoing").removeClass("reply_color")
+        $(".incoming").removeClass("reply_color")
+        $("#reply_msg").empty()
+    })
     
     
 })
