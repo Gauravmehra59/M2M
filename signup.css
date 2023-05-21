@@ -1,0 +1,13 @@
+#name{
+    background-color: aqua;
+}
+
+.row{
+    width: 50%
+}
+
+@media (max-width:1016px){
+    .row{
+        width: 100% !important;
+    }
+}

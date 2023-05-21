@@ -2,19 +2,19 @@ const socket = io()
 let username
 let textarea = document.querySelector('#textarea')
 let reply = document.querySelector('#reply_msg')
+let usernamehtml = document.querySelector('#user-name') 
 let messagearea = document.querySelector('.message__area')
 let reply_id_data = document.querySelector('.reply_id')
+let number_connection = document.querySelector('#number_connection')
 var audio = new Audio("message_tone.mp3")
-do{
-    username = prompt("Enter your name ")
-}while(!username)
 
 do{
     room = prompt("Enter your room id ")
 }while(!room)
 
-socket.emit("user_name",msg={username,room})
+
 socket.emit('room_id',room)
+
 
 welcome()
 function welcome(){
@@ -24,7 +24,7 @@ function welcome(){
 
     let markup = `
     <center>
-        <h1>You are connected now</h1>
+        <h5>You are connected now</h5>
          </center>
     `
 
@@ -42,7 +42,7 @@ function appendclient(username,type,status){
     }
     let markup = `
         <center>
-        <h1>${username} ${status}</h1>
+        <h5>${username} ${status}</h5>
         </center>
     `
 
@@ -53,10 +53,9 @@ function sendmessage(message){ // outgoing mssg sender
     var d = new Date()
     var time = d.toLocaleTimeString()
     if (message.indexOf("base64")!== -1){
-        console.log(message)
         let msg = {
             user : username,
-            message : `<img src='${message}' width = 300px/>`,
+            message : `<img src='${message}' width = 300px/><a href="${message}" download ><i class='bi bi-download download'></i></a>`,
             date : time,
             reply_data:reply.textContent,
             reply_id: Math.floor(Math.random() * 10000),
@@ -141,21 +140,26 @@ function sendmsg(){
 }
 
 var loadFile = function(event){
-    var file = event.files[0]
-    if(!file.type.match("image.*")){
-        alert('Please select image only.....')
+    // var data = event.files
+    Object.keys(event.files).forEach(myfunction)
+    function myfunction(item){
+        console.log(item)
+        var file = event.files[item]
+        console.log(event.files)
+        if(!file.type.match("image.*")){
+            alert('Please select image only.....')
+        }
+        else{
+            var reader = new FileReader()
+            reader.addEventListener('load',function(){
+                sendmessage(reader.result)
+            })
+            reader.readAsDataURL(file)
+        }
     }
-    else{
-        var reader = new FileReader()
-        reader.addEventListener('load',function(){
-            sendmessage(reader.result)
-        })
-        reader.readAsDataURL(file)
-    }
+    console.log(Object.keys(event.files))
 }
-// recieve the data 
 socket.on('message',(msg)=>{
-    // document.getElementById("audio").play() // for incoming mssg sound
     appendMessage(msg,'incoming')
     scrolltobottom()
 })
@@ -176,6 +180,17 @@ socket.on("typing",(ty)=>{
     appendTyping(ty)
     scrolltobottom()
 })
+
+socket.on("user-name",(ty)=>{
+    console.log("client",ty)
+    usernamehtml.innerHTML = ty
+    username = ty
+    socket.emit("user_name",msg={username,room})
+})
+
+// socket.on("number_connection",(ty)=>{
+//     number_connection.innerHTML = ty
+// })
 
 socket.on("typing_stop",(ty)=>{
     appendTyping(ty)

@@ -15,7 +15,9 @@
         <header>
             <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="#">M2M</a>
+                  <a class="navbar-brand text-white" href="#">M2M</a>
+                  <a class="navbar-brand text-white" id="user-name" href="#" style="font-size: 14px;"></a>
+                  <a class="navbar-brand text-white" id="number_connection" href="#" style="font-size: 14px;"></a>
                   <div id="typee" class="text-white"></div>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -27,28 +29,33 @@
                       </li>
                       <li class="nav-item">
                       </li>
-                      <li class="nav-item">
+                      <!-- <li class="nav-item">
                         <a class="nav-link text-white" href="#">File</a>
-                      </li>  
-                      <label for="file" class="text-white" style="margin: auto;">Images</label>
-                            <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(this)" style="display: none;">
+                      </li>   -->
+                      <label for="file" class="text-white" style="margin: auto; cursor: pointer;">Images</label>
+                            <input type="file" required multiple accept="image/*" name="image" id="file" onchange="loadFile(this)" style="display: none;">
+
+                      <li class="nav-item">
+                        <a class="nav-link text-white" href="/">Logout</a>
+
+                      </li>
+
                     </ul>
                   </div>
                 </div>
-              </nav>
-              
+              </nav>   
         </header>
         <div class="message__area overflow-auto" id="msg_area">
         </div>
         <span id="reply_msg"></span>     
-        <div class="input-group" style="position: absolute; bottom: 0;">
+        <div class="input-group" style="position: fixed; bottom: 0;">
             <textarea class="form-control custom-control" style="resize:none" id="textarea"></textarea>     
             <span class="input-group-addon btn btn-primary bi bi-send" onclick="sendmsg()" ></span>
         </div>
         <div class="reply_id" style="display:none;"></div>
     </section>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="event.js"></script>
+    <script type="text/javascript" src="/event.js"></script>
     <script src="/client.js"></script>
     
 </body>
